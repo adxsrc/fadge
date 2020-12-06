@@ -46,16 +46,24 @@ def Minkowski(ndim=4, **kwargs):
 
 def KerrSchild(aspin=0.0, ndim=4, **kwargs):
 
-    assert aspin == 0.0 # we are implementing the non-spinning case here
-    assert ndim  == 4
+    assert ndim == 4
 
-    eta = Minkowski(ndim)(np.arange(4))
+    eta = Minkowski(ndim)(None)
+    aa  = aspin * aspin
 
     @jit
-    def metric(x): # closure on `eta`
-        r = np.sqrt(x[1]*x[1] + x[2]*x[2] + x[3]*x[3])
-        f = 2.0/r
-        l = np.array([1.0, x[1]/r, x[2]/r, x[3]/r])
+    def metric(x): # closure on `eta`, `aspin`, and `aa`
+        zz = x[3] * x[3]
+        kk = 0.5 * (x[1] * x[1] + x[2] * x[2] + zz - aa)
+        rr = np.sqrt(kk * kk + aa * zz) + kk
+        r  = np.sqrt(rr)
+        f  = 2.0 / (r + (aa * zz) / (rr * r))
+        l  = np.array([
+            1.0,
+            (r * x[1] + aspin * x[2]) / (rr + aa),
+            (r * x[2] - aspin * x[1]) / (rr + aa),
+            x[3] / r,
+        ])
         return eta + f * l[:,np.newaxis] * l[np.newaxis,:]
 
     return metric
