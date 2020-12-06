@@ -29,3 +29,14 @@ def Cartesian(ndim=3, **kwargs):
         return np.identity(ndim, **kwargs)
 
     return metric
+
+
+def Minkowski(ndim=4, **kwargs):
+
+    assert ndim > 1
+
+    def metric(x): # closure on `ndim` and `kwargs
+        assert len(x) == ndim
+        return np.diag(np.array([-1.0] + [1.0] * (ndim-1), **kwargs))
+
+    return metric
