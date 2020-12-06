@@ -50,3 +50,19 @@ def test_KerrSchild():
         print(a, vn)
 
         assert abs(vn @ metric(x) @ vn) <= 1e-7
+
+
+def test_pseudoRiemannian():
+
+    def metric(x, ndim=6, p=2, **kwargs):
+        return np.diag(np.array([-1.0] * p + [1.0] * (ndim-p), **kwargs))
+
+    nullify = Nullify(metric, p=2)
+
+    x  = np.ones(6)
+    v  = np.ones(6)
+    vn = nullify(x, v)
+
+    print(vn)
+
+    assert abs(vn @ metric(x) @ vn) <= 1e-7
