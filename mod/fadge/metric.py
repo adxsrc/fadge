@@ -17,7 +17,7 @@
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from jax import numpy as np
+from jax import numpy as np, jit
 
 
 def Cartesian(ndim=3, **kwargs):
@@ -51,6 +51,7 @@ def KerrSchild(aspin=0.0, ndim=4, **kwargs):
 
     eta = Minkowski(ndim)(np.arange(4))
 
+    @jit
     def metric(x): # closure on `eta`
         r = np.sqrt(x[1]*x[1] + x[2]*x[2] + x[3]*x[3])
         f = 2.0/r
