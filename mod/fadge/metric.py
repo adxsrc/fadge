@@ -24,9 +24,11 @@ def Cartesian(ndim=3, **kwargs):
 
     assert ndim > 0
 
-    def metric(x): # closure on `ndim` and `kwargs`
+    g = np.identity(ndim, **kwargs) # render constant metric
+
+    def metric(x): # closure on `ndim` and `g`
         assert len(x) == ndim
-        return np.identity(ndim, **kwargs)
+        return g
 
     return metric
 
@@ -35,8 +37,10 @@ def Minkowski(ndim=4, **kwargs):
 
     assert ndim > 1
 
-    def metric(x): # closure on `ndim` and `kwargs
+    g = np.diag(np.array([-1.0] + [1.0] * (ndim-1), **kwargs)) # render constant metric
+
+    def metric(x): # closure on `ndim` and `g`
         assert len(x) == ndim
-        return np.diag(np.array([-1.0] + [1.0] * (ndim-1), **kwargs))
+        return g
 
     return metric
