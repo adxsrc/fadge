@@ -26,8 +26,7 @@ def Cartesian(ndim=3, **kwargs):
 
     g = np.identity(ndim, **kwargs) # render constant metric
 
-    def metric(x): # closure on `ndim` and `g`
-        assert len(x) == ndim
+    def metric(x): # closure on `g`
         return g
 
     return metric
@@ -39,8 +38,7 @@ def Minkowski(ndim=4, **kwargs):
 
     g = np.diag(np.array([-1.0] + [1.0] * (ndim-1), **kwargs)) # render constant metric
 
-    def metric(x): # closure on `ndim` and `g`
-        assert len(x) == ndim
+    def metric(x): # closure on `g`
         return g
 
     return metric
@@ -53,8 +51,7 @@ def KerrSchild(aspin=0.0, ndim=4, **kwargs):
 
     eta = Minkowski(ndim)(np.arange(4))
 
-    def metric(x): # closure on `ndim` and `eta`
-        assert len(x) == ndim
+    def metric(x): # closure on `eta`
         r = np.sqrt(x[1]*x[1] + x[2]*x[2] + x[3]*x[3])
         f = 2.0/r
         l = np.array([1.0, x[1]/r, x[2]/r, x[3]/r])
