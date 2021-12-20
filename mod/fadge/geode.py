@@ -25,7 +25,8 @@ from jax import jacfwd
 from jax import jit
 
 
-def Geode(metric):
+def JA(metric):
+    """Jacobian-Affine Formulation"""
 
     dmetric = jacfwd(metric) # "render" the Jacobian of the metric function
 
