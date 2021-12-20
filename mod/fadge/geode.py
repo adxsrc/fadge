@@ -50,6 +50,19 @@ def JA(metric):
     return rhs
 
 
-def Geode(metric, l0, l1, s0, *args, **kwargs):
-    rhs = JA(metric)
-    return DP5(lambda l, s: rhs(s), l0, s0, X=l1, *args, **kwargs)
+class Geode:
+
+    def __init__(self, metric, l, s, L=None, *args, **kwargs):
+        rhs = JA(metric)
+        self.sol = DP5(lambda x, y: rhs(y), l, s, X=L, *args, **kwargs)
+
+    @property
+    def lambdas(self):
+        return self.sol.xs
+
+    @property
+    def states(self):
+        return self.sol.ys
+
+    def __call__(self, *args, **kwargs):
+        return self.sol(*args, **kwargs)
