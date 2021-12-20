@@ -54,18 +54,18 @@ class Geode:
 
     def __init__(self, metric, l, s, L=None):
         rhs = JA(metric)
-        self.sol = DP5(lambda x, y: rhs(y), l, s, X=L, full=True)
+        self.geode = DP5(lambda x, y: rhs(y), l, s, X=L, full=True)
 
     def solve(self, L):
-        self.sol.preint(L)
+        self.geode.preint(L)
 
     @property
     def lambdas(self):
-        return self.sol.xs
+        return self.geode.xs
 
     @property
     def states(self):
-        return self.sol.ys
+        return self.geode.ys
 
     def __call__(self, *args, **kwargs):
-        return self.sol(*args, **kwargs)
+        return self.geode(*args, **kwargs)
