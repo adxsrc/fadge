@@ -53,7 +53,16 @@ def JA(metric):
 class Geode:
 
     def __init__(self, metric, l, s, L=None):
+        assert s.ndim > 0 and 8 in s.shape
+
         rhs = JA(metric)
+
+        if s.ndim > 1:
+            from jax.experimental.maps import xmap
+            i   = len(s.shape)-1 - s.shape[::-1].index(8)
+            m   = {j:j for j in range(s.ndim) if j != i}
+            rhs = xmap(rhs, in_axes=m, out_axes=m)
+
         self.geode = DP5(lambda x, y: rhs(y), l, s, X=L, full=True)
 
     def solve(self, L):
