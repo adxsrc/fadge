@@ -17,6 +17,8 @@
 # along with PRay.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from xaj import DP5
+
 from jax              import numpy as np
 from jax.numpy        import dot
 from jax.numpy.linalg import inv
@@ -46,3 +48,8 @@ def JA(metric):
         return np.concatenate([v, a])
 
     return rhs
+
+
+def Geode(metric, l0, l1, s0, *args, **kwargs):
+    rhs = JA(metric)
+    return DP5(lambda l, s: rhs(s), l0, s0, X=l1, *args, **kwargs)
