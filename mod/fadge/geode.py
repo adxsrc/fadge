@@ -52,9 +52,12 @@ def JA(metric):
 
 class Geode:
 
-    def __init__(self, metric, l, s, L=None, *args, **kwargs):
+    def __init__(self, metric, l, s, L=None):
         rhs = JA(metric)
-        self.sol = DP5(lambda x, y: rhs(y), l, s, X=L, *args, **kwargs)
+        self.sol = DP5(lambda x, y: rhs(y), l, s, X=L, full=True)
+
+    def solve(self, L):
+        self.sol.preint(L)
 
     @property
     def lambdas(self):
