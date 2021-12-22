@@ -17,7 +17,7 @@
 # along with PRay.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from xaj import DP5
+from xaj import odeint
 
 from jax              import numpy as np
 from jax.numpy        import dot
@@ -63,10 +63,12 @@ class Geode:
             m   = {j:j for j in range(s.ndim) if j != i}
             rhs = xmap(rhs, in_axes=m, out_axes=m)
 
-        self.geode = DP5(lambda x, y: rhs(y), l, s, X=L, full=True)
+        self.geode = odeint(lambda x, y: rhs(y), l, s, 1 if L is None else abs(L))
+        if L is not None:
+            self.geode.extend(L)
 
     def solve(self, L):
-        self.geode.preint(L)
+        self.geode.extend(L)
 
     @property
     def lambdas(self):
