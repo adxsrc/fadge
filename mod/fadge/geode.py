@@ -56,8 +56,13 @@ class Geode:
         assert s.ndim >= 2
 
         rhs = lambda l, s: JA(metric)(s)
-        if eqax is None and s.ndim >= 2:
-            eqax = [0,1]
+        if eqax is None:
+            for offset in range(s.ndim-2+1):
+                if s.shape[offset:offset+2] == (2,4):
+                    eqax = [offset, offset+1]
+                    break
+            else:
+                raise ValueError(f'cannot deduce `eqax` from state array with shape {s.shape}')
 
         kwargs['eqax'] = eqax
         self.geode = odeint(rhs, l, s, 1 if L is None else abs(L), **kwargs)
