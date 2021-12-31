@@ -52,18 +52,14 @@ def JA(metric):
 
 class Geode:
 
-    def __init__(self, metric, l, s, L=None):
+    def __init__(self, metric, l, s, L=None, eqax=None, **kwargs):
         assert s.ndim > 0 and 8 in s.shape
 
-        rhs = JA(metric)
+        rhs = lambda l, s: JA(metric)(s)
+        if eqax is None and s.ndim > 1:
+            eqax = [len(s.shape)-1 - s.shape[::-1].index(8)]
 
-        if s.ndim > 1:
-            from jax.experimental.maps import xmap
-            i   = len(s.shape)-1 - s.shape[::-1].index(8)
-            m   = {j:j for j in range(s.ndim) if j != i}
-            rhs = xmap(rhs, in_axes=m, out_axes=m)
-
-        self.geode = odeint(lambda x, y: rhs(y), l, s, 1 if L is None else abs(L))
+        self.geode = odeint(rhs, l, s, 1 if L is None else abs(L), eqax=eqax, **kwargs)
         if L is not None:
             self.geode.extend(L)
 
