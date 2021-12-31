@@ -34,8 +34,8 @@ def JA(metric):
 
     @jit
     def rhs(state):
-        x  = state[:4]
-        v  = state[4:]
+        x  = state[0]
+        v  = state[1]
 
         g  =  metric(x)
         dg = dmetric(x)
@@ -45,7 +45,7 @@ def JA(metric):
         a  = (-       dot(ig, dot(dot(dg, v), v))
               + 0.5 * dot(ig, dot(v, dot(v, dg))))
 
-        return np.concatenate([v, a])
+        return np.array([v, a])
 
     return rhs
 
@@ -53,13 +53,15 @@ def JA(metric):
 class Geode:
 
     def __init__(self, metric, l, s, L=None, eqax=None, **kwargs):
-        assert s.ndim > 0 and 8 in s.shape
+        assert s.ndim >= 2
 
         rhs = lambda l, s: JA(metric)(s)
-        if eqax is None and s.ndim > 1:
-            eqax = [len(s.shape)-1 - s.shape[::-1].index(8)]
+        if eqax is None and s.ndim >= 2:
+            eqax = [0,1]
 
-        self.geode = odeint(rhs, l, s, 1 if L is None else abs(L), eqax=eqax, **kwargs)
+        kwargs['eqax'] = eqax
+        self.geode = odeint(rhs, l, s, 1 if L is None else abs(L), **kwargs)
+
         if L is not None:
             self.geode.extend(L)
 
