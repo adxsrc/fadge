@@ -70,8 +70,8 @@ class Geode:
         if L is not None:
             self.geode.extend(L)
 
-    def extend(self, L):
-        self.geode.extend(L)
+    def extend(self, L, **kwargs):
+        self.geode.extend(L, **kwargs)
 
     @property
     def lambdas(self):
