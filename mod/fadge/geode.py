@@ -45,7 +45,7 @@ def JA(metric):
         a  = (-       dot(ig, dot(dot(dg, v), v))
               + 0.5 * dot(ig, dot(v, dot(v, dg))))
 
-        return np.array([v, a])
+        return np.array([v, a], dtype=state.dtype)
 
     return rhs
 
