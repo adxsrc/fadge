@@ -70,7 +70,7 @@ class Geode:
         if L is not None:
             self.geode.extend(L)
 
-    def solve(self, L):
+    def extend(self, L):
         self.geode.extend(L)
 
     @property
