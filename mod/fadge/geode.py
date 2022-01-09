@@ -65,7 +65,9 @@ class Geode:
                 raise ValueError(f'cannot deduce `eqax` from state array with shape {s.shape}')
 
         kwargs['eqax'] = eqax
-        self.geode = odeint(rhs, l, s, 1 if L is None else abs(L), **kwargs)
+        if 'h' not in kwargs:
+            kwargs['h'] = 1 if L is None else abs(L)
+        self.geode = odeint(rhs, l, s, **kwargs)
 
         if L is not None:
             self.geode.extend(L)
