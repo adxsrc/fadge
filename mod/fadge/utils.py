@@ -22,32 +22,15 @@ from jax.numpy import dot
 from math      import isclose
 
 
-def quadratic(A, b, C, **kwargs): # b == B/2
-
-    if A == 0: # linear case
-        if b == 0:
-            if C == 0:
-                return ()
-            else:
-                raise ValueError(f'A={A}, B/2=b={b}, C={C} implies the contradiction {C}=0')
-        else:
-            return (-0.5 * C / b,)
-
-    else: # quadratic ase
-        bb = b * b
-        AC = A * C
-        if np.isclose(bb, AC, **kwargs): # double root
-            x = - b / A
-            return (x, x)
-        elif bb > AC: # two roots
-            if b == 0:
-                x = np.sqrt(-C / A)
-                return (-x, x)
-            else:
-                temp = -(b + np.sign(b) * np.sqrt(bb - AC))
-                return tuple(sorted((temp / A, C / temp)))
-        else: # no root
-            return ()
+def quadratic(A, b, C):
+    bb = b * b
+    AC = A * C
+    dd = np.select([~np.isclose(bb, AC)], [bb - AC], 0)
+    bs = np.heaviside(b, 1)
+    D  = - (b + bs * np.sqrt(dd))
+    x1 = D / A
+    x2 = C / D
+    return np.minimum(x1, x2), np.maximum(x1, x2)
 
 
 def Nullify(metric, p=1):
@@ -59,6 +42,10 @@ def Nullify(metric, p=1):
         A = v[:p] @ g[:p,:p] @ v[:p]
         b = v[p:] @ g[p:,:p] @ v[:p]
         C = v[p:] @ g[p:,p:] @ v[p:]
-        return np.concatenate((v[:p], v[p:] / max(*quadratic(A, b, C))))
+
+        d1, d2 = quadratic(A, b, C)
+        S      = np.select([d1 > 0, d2 > 0], [d1, d2], np.nan)
+
+        return np.concatenate([v[:p], v[p:] / S])
 
     return nullify
