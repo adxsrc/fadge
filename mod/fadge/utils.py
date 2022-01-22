@@ -19,6 +19,7 @@
 
 from jax       import numpy as np
 from jax.numpy import dot
+from math      import isclose
 
 
 def Nullify(metric, p=1):
@@ -30,7 +31,16 @@ def Nullify(metric, p=1):
         A = v[:p] @ g[:p,:p] @ v[:p]
         B = v[p:] @ g[p:,:p] @ v[:p]
         C = v[p:] @ g[p:,p:] @ v[p:]
-        D = - 2 * B / C if A == 0 else - A / (B + np.sqrt(B * B - A * C)) # normalization
+
+        if isclose(A, 0, abs_tol=1e-12):
+            print(f'WARNING: A ~ 0 [A,B,C = {A:.3g},{B:.3g},{C:.3g}]')
+            D = - 2 * B / C
+        elif isclose(B * B, A * C):
+            print(f'WARNING: B^2 ~ AC [A,B,C = {A:.3g},{B:.3g},{C:.3g}]')
+            D = - A / B
+        else:
+            D = - A / (B + np.sqrt(B * B - A * C))
+
         return np.concatenate((v[:p], v[p:] * D))
 
     return nullify
