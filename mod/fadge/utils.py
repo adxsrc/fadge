@@ -30,7 +30,7 @@ def Nullify(metric, p=1):
         A = v[:p] @ g[:p,:p] @ v[:p]
         B = v[p:] @ g[p:,:p] @ v[:p]
         C = v[p:] @ g[p:,p:] @ v[p:]
-        D = - A / (B + np.sqrt(B * B - A * C)) # normalization
+        D = - 2 * B / C if A == 0 else - A / (B + np.sqrt(B * B - A * C)) # normalization
         return np.concatenate((v[:p], v[p:] * D))
 
     return nullify
