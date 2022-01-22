@@ -22,6 +22,34 @@ from jax.numpy import dot
 from math      import isclose
 
 
+def quadratic(A, b, C, **kwargs): # b == B/2
+
+    if A == 0: # linear case
+        if b == 0:
+            if C == 0:
+                return ()
+            else:
+                raise ValueError(f'A={A}, B/2=b={b}, C={C} implies the contradiction {C}=0')
+        else:
+            return (-0.5 * C / b,)
+
+    else: # quadratic ase
+        bb = b * b
+        AC = A * C
+        if np.isclose(bb, AC, **kwargs): # double root
+            x = - b / A
+            return (x, x)
+        elif bb > AC: # two roots
+            if b == 0:
+                x = np.sqrt(-C / A)
+                return (-x, x)
+            else:
+                temp = -(b + np.sign(b) * np.sqrt(bb - AC))
+                return tuple(sorted((temp / A, C / temp)))
+        else: # no root
+            return ()
+
+
 def Nullify(metric, p=1):
 
     assert p > 0
@@ -29,18 +57,8 @@ def Nullify(metric, p=1):
     def nullify(x, v): # closure on `p`
         g = metric(x)
         A = v[:p] @ g[:p,:p] @ v[:p]
-        B = v[p:] @ g[p:,:p] @ v[:p]
+        b = v[p:] @ g[p:,:p] @ v[:p]
         C = v[p:] @ g[p:,p:] @ v[p:]
-
-        if isclose(A, 0, abs_tol=1e-12):
-            print(f'WARNING: A ~ 0 [A,B,C = {A:.3g},{B:.3g},{C:.3g}]')
-            D = - 2 * B / C
-        elif isclose(B * B, A * C):
-            print(f'WARNING: B^2 ~ AC [A,B,C = {A:.3g},{B:.3g},{C:.3g}]')
-            D = - A / B
-        else:
-            D = - A / (B + np.sqrt(B * B - A * C))
-
-        return np.concatenate((v[:p], v[p:] * D))
+        return np.concatenate((v[:p], v[p:] / max(*quadratic(A, b, C))))
 
     return nullify
