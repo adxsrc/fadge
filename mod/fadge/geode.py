@@ -40,11 +40,7 @@ def JA(metric):
         g  =  metric(x)
         dg = dmetric(x)
 
-        ig = inv(g)
-
-        a  = (-       dot(ig, dot(dot(dg, v), v))
-              + 0.5 * dot(ig, dot(v, dot(v, dg))))
-
+        a  = inv(g) @ (- (dg @ v) @ v + 0.5 * v @ (v @ dg))
         return np.array([v, a], dtype=state.dtype)
 
     return rhs
