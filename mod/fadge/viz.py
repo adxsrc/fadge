@@ -18,6 +18,7 @@
 
 
 from jax import numpy as np
+from collections import Iterable
 
 
 def KSHorizons(aspin, n=None):
@@ -45,7 +46,11 @@ def KSHorizons(aspin, n=None):
         ax.plot( R, z, *args, **kwargs)
         ax.plot(-R, z, *args, **kwargs)
 
-    def plotedgeon(ax, color=None, eh=True, es=True):
+    def xy(r):
+        R = max(np.sqrt(r * r + aa), 1e-4)
+        return R * np.sin(phi), R * np.cos(phi)
+
+    def plotedgeon(ax, color=None, eh=True, es=True, r=[]):
         p = ax.plot([-aspin, aspin], [0,0], ':', color=color)
         c = p[0].get_color()
         ax.scatter([-aspin, aspin], [0,0], color=c, label=f'a={aspin}')
@@ -65,11 +70,10 @@ def KSHorizons(aspin, n=None):
                 plot2(ax, *Rz(rhp), color=c)
                 plot2(ax, *Rz(rhm), color=c)
 
-    def xy(r):
-        R = max(np.sqrt(r * r + aa), 1e-4)
-        return R * np.sin(phi), R * np.cos(phi)
+        for r0 in r:
+            plot2(ax, *Rz(r0), '--', color=c, linewidth=1)
 
-    def plotfaceon(ax, color=None, eh=True, es=True):
+    def plotfaceon(ax, color=None, eh=True, es=True, r=[]):
         p = ax.plot(*xy(0.0), color=color, linewidth=4, label=f'a={aspin}')
         c = p[0].get_color()
 
@@ -83,15 +87,23 @@ def KSHorizons(aspin, n=None):
                 ax.plot(*xy(rhp), color=c)
                 ax.plot(*xy(rhm), color=c)
 
-    def horizons(ax=None, color=None, faceon=False, eh=True, es=True, **kwargs):
+        for r0 in r:
+            ax.plot(*xy(r0), '--', color=c, linewidth=1)
+
+    def horizons(ax=None, color=None, faceon=False, eh=True, es=True, r=None, **kwargs):
         if ax is None:
             from matplotlib import pyplot as plt
             fig, ax = plt.subplots(1,1,**kwargs)
             ax.set_aspect('equal')
 
+        if r is None:
+            r = []
+        elif not isinstance(r, Iterable):
+            r = [r]
+
         if faceon:
-            plotfaceon(ax, color, eh, es)
+            plotfaceon(ax, color, eh, es, r)
         else:
-            plotedgeon(ax, color, eh, es)
+            plotedgeon(ax, color, eh, es, r)
 
     return horizons
