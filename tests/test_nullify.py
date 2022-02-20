@@ -43,13 +43,14 @@ def test_KerrSchild():
         metric  = KerrSchild(a)
         nullify = Nullify(metric)
 
-        x  = np.ones(4)
+        x  = np.ones(4) * 2
         v  = np.ones(4)
         vn = nullify(x, v)
+        vv = vn @ metric(x) @ vn
 
-        print(a, vn)
+        print(a, vn, vv)
 
-        assert abs(vn @ metric(x) @ vn) <= 1e-7
+        assert abs(vv) <= 1e-7
 
 
 def test_pseudoRiemannian():
@@ -62,7 +63,8 @@ def test_pseudoRiemannian():
     x  = np.ones(6)
     v  = np.ones(6)
     vn = nullify(x, v)
+    vv = vn @ metric(x) @ vn
 
-    print(vn)
+    print(vn, vv)
 
-    assert abs(vn @ metric(x) @ vn) <= 1e-7
+    assert abs(vv) <= 1e-7
