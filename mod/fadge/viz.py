@@ -18,7 +18,10 @@
 
 
 from jax import numpy as np
-from collections import Iterable
+try:
+    from collections import Iterable
+except:
+    Iterable = (tuple, list)
 
 
 def KSHorizons(aspin, n=None):
