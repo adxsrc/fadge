@@ -1,3 +1,5 @@
+[![Lint and test fadge](https://github.com/adxsrc/fadge/actions/workflows/python-test.yml/badge.svg)](https://github.com/adxsrc/fadge/actions/workflows/python-test.yml)
+
 # `Fadge`
 
 Fast Automatic Differential GEometry (`Fadge`) uses
