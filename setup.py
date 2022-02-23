@@ -24,16 +24,15 @@ from setuptools import setup, find_packages
 
 setup(
     name='fadge',
-    version='0.1.0',
+    version='0.1.1',
     url='https://github.com/adxsrc/fadge',
     author='Chi-kwan Chan',
     author_email='chanc@arizona.edu',
     description='Fast Automatic Differential GEometry',
     packages=find_packages('mod'),
     package_dir={'': 'mod'},
-    python_requires='>=3.6', # `fadge` uses python3's f-string and typing
+    python_requires='>=3.7',
     install_requires=[
-        'jax',
-        'xaj',
+        'xaj==0.1.1',
     ],
 )
