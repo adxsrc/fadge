@@ -19,6 +19,8 @@
 
 from jax import numpy as np
 
+from .shadow import PHI, Q
+
 
 def cam(rij, ab):
 
@@ -37,24 +39,6 @@ def cam(rij, ab):
 
 
 def sphorbit(aspin, r0):
-
-    def PHI(a, r):
-        "Teo (2003) equation 11b"
-        if a == 0 and r == 3:
-            return 0 # == - (9/2) * (r-3)/a
-        elif a == 1:
-            return - (r*r - 2*r - 1)
-        else:
-            return - (r*r*r - 3*r*r + a*a*r + a*a) / (a * (r-1))
-
-    def Q(a, r):
-        "Teo (2003) equation 11b"
-        if a == 0 and r == 3:
-            return 27 # == - ((9/2) * (r-3)/a)**2 + 27
-        if a == 1:
-            return - r*r*r * (r-4)
-        else:
-            return - r*r*r * (r*r*r - 6*r*r + 9*r - 4*a*a) / (a*a * (r-1)*(r-1))
 
     def thetadot(a, r):
         return np.sqrt(Q(a, r))
