@@ -45,8 +45,11 @@ def shadow(aspin=1.1, inc=np.pi/2):
     if abs(aspin) <= 1:
         r1 = rph1(aspin)
     else:
-        r1 = 1
+        r1 = (aspin*aspin - 1)**(1/3) + 1
+
     rs = np.linspace(r1+1e-6, rph2(aspin)-1e-6, num=100)
+    if abs(aspin) > 1:
+        rs = np.concatenate([np.array([np.nan]), rs])
 
     a = np.array([PHI(aspin, r) / np.sin(inc) for r in rs])
     b = np.array([np.sqrt(Q(aspin, r) + (aspin * np.cos(inc))**2 - (PHI(aspin, r) / np.tan(inc))**2) for r in rs])
