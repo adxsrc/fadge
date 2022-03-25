@@ -22,18 +22,27 @@ config.update("jax_enable_x64", True)
 
 import numpy as np
 import h5py
+import click
 
 from fadge import GRRT
 
 
-inc   = 90.0
-aspin =  2.0
-
-
+#==============================================================================
+@click.group()
 def fadge():
-    print('FADGE: Fast Automatic Differential GEometry with JAX')
+    pass
 
-    grrt = GRRT(
+
+#==============================================================================
+@fadge.command()
+@click.argument("aspin",       type=float)
+@click.argument("inclination", type=float)
+def grrt(aspin, inclination):
+    print( "Fadge: general relativistic ray tracing")
+    print(f"    aspin       = {aspin:.2f}")
+    print(f"    inclination = {inclination:g}")
+
+    ns = GRRT(
         aspin,
         eps=1e-3, atol=1e-3, rtol=0,
         names={'ind':'lambda'},
@@ -41,15 +50,17 @@ def fadge():
         steps=None, dense=None,
     )
 
-    grrt.set_cam(1e4, inc, 0)
-    grrt.set_image(16, 256)
+    ns.set_cam(1e4, inclination, 0)
+    ns.set_image(16, 256)
 
-    l, f = grrt.geode()
+    l, f = ns.geode()
 
-    with h5py.File(f'img_a{aspin:.2f}_i{inc:g}.h5', 'w') as h:
+    with h5py.File(f'img_a{aspin:.2f}_i{inclination:g}.h5', 'w') as h:
         h.create_dataset('l', data=np.array([l[0],l[-1]]))
         h.create_dataset('f', data=np.array([f[0],f[-1]]))
 
 
+#==============================================================================
+# In case run as a script
 if __name__ == "__main__":
     fadge()

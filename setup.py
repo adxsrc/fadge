@@ -38,6 +38,7 @@ setup(
     },
     python_requires='>=3.7',
     install_requires=[
+        'click>=7.1.2',
         'xaj==0.1.1',
     ],
 )
