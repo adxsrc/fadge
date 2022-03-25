@@ -35,27 +35,40 @@ def fadge():
 
 #==============================================================================
 @fadge.command()
-@click.argument("aspin",       type=float)
-@click.argument("inclination", type=float)
-def grrt(aspin, inclination):
+
+@click.option('--eps',   default=1e-3,    help="Stop integration `eps` outside the event horizon")
+@click.option('--atol',  default=1e-3,    help="Absolute error tolerance in numerical integration")
+@click.option('--setup', default='image', help='Initial condition setup; can be "image" or "axis"')
+
+@click.argument('aspin',       type=float)
+@click.argument('inclination', type=float)
+
+def grrt(aspin, eps, setup, atol, inclination):
     print( "Fadge: general relativistic ray tracing")
     print(f"    aspin       = {aspin:.2f}")
     print(f"    inclination = {inclination:g}")
 
     ns = GRRT(
         aspin,
-        eps=1e-3, atol=1e-3, rtol=0,
+        eps=eps, atol=atol, rtol=0,
         names={'ind':'lambda'},
         dtype=np.float64,
         steps=None, dense=None,
     )
 
     ns.set_cam(1e4, inclination, 0)
-    ns.set_image(16, 256)
+    if setup == 'image':
+        ns.set_image(16, 256)
+        out = f'image_a{aspin:.2f}_i{inclination:g}.h5'
+    elif setup == 'axis':
+        ns.set_axis(16, 1024)
+        out = f'axis_a{aspin:.2f}_i{inclination:g}.h5'
+    else:
+        raise ValueError(f'Unknown setup "{setup}".')
 
     l, f = ns.geode()
 
-    with h5py.File(f'img_a{aspin:.2f}_i{inclination:g}.h5', 'w') as h:
+    with h5py.File(out, 'w') as h:
         h.create_dataset('l', data=np.array([l[0],l[-1]]))
         h.create_dataset('f', data=np.array([f[0],f[-1]]))
 
