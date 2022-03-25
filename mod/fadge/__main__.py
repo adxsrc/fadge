@@ -1,7 +1,5 @@
-#!/usr/bin/env python3
-#
-# Copyright (C) 2020 Chi-kwan Chan
-# Copyright (C) 2020 Steward Observatory
+# Copyright (C) 2022 Chi-kwan Chan
+# Copyright (C) 2022 Steward Observatory
 #
 # This file is part of fadge.
 #
@@ -19,25 +17,9 @@
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from setuptools import setup, find_packages
+def fadge():
+    print('FADGE: Fast Automatic Differential GEometry with JAX')
 
 
-setup(
-    name='fadge',
-    version='0.1.1',
-    url='https://github.com/adxsrc/fadge',
-    author='Chi-kwan Chan',
-    author_email='chanc@arizona.edu',
-    description='Fast Automatic Differential GEometry',
-    packages=find_packages('mod'),
-    package_dir={'': 'mod'},
-    entry_points={
-        'console_scripts': [
-            'fadge = fadge.__main__:fadge',
-        ],
-    },
-    python_requires='>=3.7',
-    install_requires=[
-        'xaj==0.1.1',
-    ],
-)
+if __name__ == "__main__":
+    fadge()
