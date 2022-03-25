@@ -17,8 +17,38 @@
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from jax.config import config
+config.update("jax_enable_x64", True)
+
+import numpy as np
+import h5py
+
+from fadge import GRRT
+
+
+inc   = 90.0
+aspin =  2.0
+
+
 def fadge():
     print('FADGE: Fast Automatic Differential GEometry with JAX')
+
+    grrt = GRRT(
+        aspin,
+        eps=1e-3, atol=1e-3, rtol=0,
+        names={'ind':'lambda'},
+        dtype=np.float64,
+        steps=None, dense=None,
+    )
+
+    grrt.set_cam(1e4, inc, 0)
+    grrt.set_image(16, 256)
+
+    l, f = grrt.geode()
+
+    with h5py.File(f'img_a{aspin:.2f}_i{inc:g}.h5', 'w') as h:
+        h.create_dataset('l', data=np.array([l[0],l[-1]]))
+        h.create_dataset('f', data=np.array([f[0],f[-1]]))
 
 
 if __name__ == "__main__":
