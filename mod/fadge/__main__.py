@@ -36,14 +36,15 @@ def fadge():
 #==============================================================================
 @fadge.command()
 
-@click.option('--eps',   default=1e-3,    help="Stop integration `eps` outside the event horizon")
-@click.option('--atol',  default=1e-3,    help="Absolute error tolerance in numerical integration")
-@click.option('--setup', default='image', help='Initial condition setup; can be "image" or "axis"')
+@click.option('--eps',         default=1e-3,    help="Stop integration `eps` outside the event horizon")
+@click.option('--atol',        default=1e-3,    help="Absolute error tolerance in numerical integration")
+@click.option('--setup',       default='image', help='Initial condition setup; can be "image" or "axis"')
+@click.option('--full/--ends', default=False,   help="Output full geodesics or only end points")
 
 @click.argument('aspin',       type=float)
 @click.argument('inclination', type=float)
 
-def grrt(aspin, eps, setup, atol, inclination):
+def grrt(aspin, eps, setup, full, atol, inclination):
     print( "Fadge: general relativistic ray tracing")
     print(f"    aspin       = {aspin:.2f}")
     print(f"    inclination = {inclination:g}")
@@ -53,7 +54,7 @@ def grrt(aspin, eps, setup, atol, inclination):
         eps=eps, atol=atol, rtol=0,
         names={'ind':'lambda'},
         dtype=np.float64,
-        steps=None, dense=None,
+        steps=full, dense=False,
     )
 
     ns.set_cam(1e4, inclination, 0)
@@ -69,8 +70,8 @@ def grrt(aspin, eps, setup, atol, inclination):
     l, f = ns.geode()
 
     with h5py.File(out, 'w') as h:
-        h.create_dataset('l', data=np.array([l[0],l[-1]]))
-        h.create_dataset('f', data=np.array([f[0],f[-1]]))
+        h.create_dataset('l', data=np.array(l))
+        h.create_dataset('f', data=np.array(f))
 
 
 #==============================================================================
