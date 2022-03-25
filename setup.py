@@ -24,7 +24,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='fadge',
-    version='0.1.1',
+    version='0.1.2',
     url='https://github.com/adxsrc/fadge',
     author='Chi-kwan Chan',
     author_email='chanc@arizona.edu',
@@ -39,6 +39,6 @@ setup(
     python_requires='>=3.7',
     install_requires=[
         'click>=7.1.2',
-        'xaj==0.1.1',
+        'xaj==0.1.3',
     ],
 )
