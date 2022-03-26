@@ -29,6 +29,7 @@ class Patch(Manifold):
     """
     def __init__(self, M):
         self.parent = M
+        M.patches.append(self)
 
 
 class DiscretePatch(Manifold):
@@ -40,3 +41,4 @@ class DiscretePatch(Manifold):
     """
     def __init__(self, M):
         self.parent = M
+        M.patches.append(self)

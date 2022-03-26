@@ -34,7 +34,8 @@ class Manifold:
 
     """
     def __init__(self, ndim=2):
-        self.ndim = ndim
+        self.ndim    = ndim
+        self.patches = []
 
     def __repr__(self):
         return f'{self.ndim}-manifold'
