@@ -35,16 +35,10 @@ class Patch(Manifold):
         return f'{self.parent.ndim}-patch'
 
 
-class DiscretePatch(Manifold):
-    """Coordinate Patch
+class DiscretePatch(Patch):
+    """Discrete Coordinate Patch
 
-    A simply-connected submanifold where coordinate charts can be
-    defined.
+    A simply-connected submanifold of a DiscreteManifold where
+    coordinate charts can be defined.
 
     """
-    def __init__(self, M):
-        self.parent = M
-        M.patches.append(self)
-
-    def __repr__(self):
-        return f'{self.parent.ndim}-discretepatch'
