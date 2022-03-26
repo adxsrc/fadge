@@ -1,5 +1,5 @@
-# Copyright (C) 2020 Chi-kwan Chan
-# Copyright (C) 2020 Steward Observatory
+# Copyright (C) 2022 Chi-kwan Chan
+# Copyright (C) 2022 Steward Observatory
 #
 # This file is part of fadge.
 #
@@ -15,7 +15,3 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
-
-
-from . import bounds, geode, icond, metric, shadow, utils, viz
-from .core import GRRT
