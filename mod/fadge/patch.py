@@ -31,6 +31,9 @@ class Patch(Manifold):
         self.parent = M
         M.patches.append(self)
 
+    def __repr__(self):
+        return f'{self.parent.ndim}-patch'
+
 
 class DiscretePatch(Manifold):
     """Coordinate Patch
@@ -42,3 +45,6 @@ class DiscretePatch(Manifold):
     def __init__(self, M):
         self.parent = M
         M.patches.append(self)
+
+    def __repr__(self):
+        return f'{self.parent.ndim}-discretepatch'
