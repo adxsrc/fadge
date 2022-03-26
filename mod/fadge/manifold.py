@@ -17,6 +17,9 @@
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
 
 
+#==============================================================================
+# Base classes
+
 class Manifold:
     """Manifold
 
@@ -45,3 +48,12 @@ class DiscreteManifold(Manifold):
     """
     def __repr__(self):
         return f'{self.ndim}-discretemanifold'
+
+
+#==============================================================================
+# Concrete classes
+
+class Sphere(Manifold):
+
+    def __repr__(self):
+        return f'S{self.ndim}'

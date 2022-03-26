@@ -18,6 +18,7 @@
 
 
 from fadge import Manifold, DiscreteManifold
+from fadge.manifold import *
 
 
 def test_manifold():
@@ -29,3 +30,11 @@ def test_manifold():
     D = DiscreteManifold(3)
     print(D)
     assert D.ndim == 3
+
+    S2 = Sphere()
+    print(S2)
+    assert S2.ndim == 2
+
+    S3 = Sphere(3)
+    print(S3)
+    assert S3.ndim == 3
