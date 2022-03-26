@@ -17,10 +17,15 @@
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from fadge import Manifold
+from fadge import Manifold, DiscreteManifold
 
 
 def test_manifold():
+
     M = Manifold()
     print(M)
     assert M.ndim == 2
+
+    D = DiscreteManifold(3)
+    print(D)
+    assert D.ndim == 3

@@ -35,3 +35,13 @@ class Manifold:
 
     def __repr__(self):
         return f'{self.ndim}-manifold'
+
+
+class DiscreteManifold(Manifold):
+    """DiscreteManifold
+
+    A discrete manifold used in discrete differential geometry.
+
+    """
+    def __repr__(self):
+        return f'{self.ndim}-discretemanifold'

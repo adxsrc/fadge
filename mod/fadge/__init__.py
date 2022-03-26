@@ -17,4 +17,4 @@
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from .manifold import Manifold
+from .manifold import Manifold, DiscreteManifold
