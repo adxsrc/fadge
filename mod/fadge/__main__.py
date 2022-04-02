@@ -59,7 +59,7 @@ def grrt(aspin, eps, setup, full, atol, inclination):
 
     ns.set_cam(1e4, inclination, 0)
     if setup == 'image':
-        ns.set_image(16, 256)
+        ns.set_image(16, 128)
         out = f'image_a{aspin:.2f}_i{inclination:g}.h5'
     elif setup == 'axis':
         ns.set_axis(16, 1024)
