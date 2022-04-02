@@ -66,9 +66,9 @@ class GRRT:
             out_axes={i+1:i for i in range(1,ab.ndim)},
         )(ab)
 
-    def set_image(self, fov=16, n=32):
+    def set_image(self, fov=16, n=32, alpha0=0, beta0=0):
         axes = fov * ((np.arange(n) + 0.5) / n - 0.5)
-        a, b = np.meshgrid(axes, axes, indexing='ij')
+        a, b = np.meshgrid(axes+alpha0, axes+beta0, indexing='ij')
         self.set_pixels(a, b)
 
     def set_axis(self, fov=16, n=32, PA=90, alpha0=0):
