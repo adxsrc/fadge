@@ -39,12 +39,14 @@ def fadge():
 @click.option('--eps',         default=3e-2,    help="Stop integration `eps` outside the event horizon")
 @click.option('--atol',        default=1e-3,    help="Absolute error tolerance in numerical integration")
 @click.option('--setup',       default='image', help='Initial condition setup; can be "image" or "axis"')
+@click.option('--alpha0',      default=0.0,     help='Initial condition offset along alpha direction')
+@click.option('--beta0',       default=0.0,     help='Initial condition offset along beta  direction')
 @click.option('--full/--ends', default=False,   help="Output full geodesics or only end points")
 
 @click.argument('aspin',       type=float)
 @click.argument('inclination', type=float)
 
-def grrt(aspin, eps, setup, full, atol, inclination):
+def grrt(aspin, eps, setup, alpha0, beta0, full, atol, inclination):
     print( "Fadge: general relativistic ray tracing")
     print(f"    aspin       = {aspin:.2f}")
     print(f"    inclination = {inclination:g}")
@@ -59,10 +61,12 @@ def grrt(aspin, eps, setup, full, atol, inclination):
 
     ns.set_cam(1e4, inclination, 0)
     if setup == 'image':
-        ns.set_image(16, 128)
+        ns.set_image(16, 128, alpha0=alpha0, beta0=beta0)
         out = f'image_a{aspin:.2f}_i{inclination:g}.h5'
     elif setup == 'axis':
-        ns.set_axis(16, 1024)
+        if beta0 != 0.0:
+            print('WARNING: set_axis() does not support setting `beta0`; ignore')
+        ns.set_axis(16, 1024, alpha0=alpha0)
         out = f'axis_a{aspin:.2f}_i{inclination:g}.h5'
     else:
         raise ValueError(f'Unknown setup "{setup}".')
