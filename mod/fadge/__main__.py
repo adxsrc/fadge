@@ -36,8 +36,8 @@ def fadge():
 #==============================================================================
 @fadge.command()
 
-@click.option('--eps',         default=1e-2,    help="Stop integration `eps` outside the event horizon")
-@click.option('--atol',        default=1e-4,    help="Absolute error tolerance in numerical integration")
+@click.option('--eps',         default=3e-2,    help="Stop integration `eps` outside the event horizon")
+@click.option('--atol',        default=1e-3,    help="Absolute error tolerance in numerical integration")
 @click.option('--setup',       default='image', help='Initial condition setup; can be "image" or "axis"')
 @click.option('--full/--ends', default=False,   help="Output full geodesics or only end points")
 
