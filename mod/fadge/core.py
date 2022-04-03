@@ -111,8 +111,8 @@ class GRRT:
             if 'hupper' not in kwargs:
                 kwargs['hupper'] = lambda l, s: KSr(s[0]) * fhupper + 1
 
-            fhlower = kwargs.pop('fhlower', 1e-2)
-            if 'hlower' not in kwargs:
+            fhlower = kwargs.pop('fhlower', None)
+            if 'hlower' not in kwargs and fhlower is not None:
                 kwargs['hlower'] = lambda l, s: fhlower
 
             eps = kwargs.pop('eps', 1e-2)
