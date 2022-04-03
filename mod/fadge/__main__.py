@@ -36,7 +36,7 @@ def fadge():
 #==============================================================================
 @fadge.command()
 
-@click.option('--eps',         default=3e-2,    help="Stop integration `eps` outside the event horizon")
+@click.option('--eps',         default=1e-3,    help="Stop integration `eps` outside the event horizon")
 @click.option('--atol',        default=1e-3,    help="Absolute error tolerance in numerical integration")
 @click.option('--setup',       default='image', help='Initial condition setup; can be "image" or "axis"')
 @click.option('--alpha0',      default=0.0,     help='Initial condition offset along alpha direction')
