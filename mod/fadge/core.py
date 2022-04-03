@@ -107,9 +107,13 @@ class GRRT:
                 dR = np.sqrt(x[1] * x[1] + x[2] * x[2]) - absaspin
                 return np.sqrt(dR * dR + x[3] * x[3])
 
-            fhlim = kwargs.pop('fhlim', 0.75)
-            if 'hlim' not in kwargs:
-                kwargs['hlim'] = lambda l, s: KSr(s[0]) * fhlim + 1
+            fhupper = kwargs.pop('fhupper', 0.75)
+            if 'hupper' not in kwargs:
+                kwargs['hupper'] = lambda l, s: KSr(s[0]) * fhupper + 1
+
+            fhlower = kwargs.pop('fhlower', 1e-2)
+            if 'hlower' not in kwargs:
+                kwargs['hlower'] = lambda l, s: fhlower
 
             eps = kwargs.pop('eps', 1e-2)
             if 'filter' not in kwargs:
