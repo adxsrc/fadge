@@ -27,7 +27,7 @@ from jax import jacfwd
 from jax import jit
 
 
-def JA(metric):
+def JA(metric, ind=None):
     """Jacobian-Affine Formulation"""
 
     dmetric = jacfwd(metric) # "render" the Jacobian of the metric function
@@ -41,17 +41,20 @@ def JA(metric):
         dg = dmetric(x)
 
         a  = inv(g) @ (- (dg @ v) @ v + 0.5 * v @ (v @ dg))
-        return np.array([v, a], dtype=state.dtype)
+        if ind == 'time':
+            return np.array([v, a - a[0] * v])
+        else: # the default
+            return np.array([v, a])
 
     return rhs
 
 
 class Geode:
 
-    def __init__(self, metric, l, s, L=None, eqax=None, **kwargs):
+    def __init__(self, metric, l, s, ind=None, L=None, eqax=None, **kwargs):
         assert s.ndim >= 2
 
-        rhs = lambda l, s: JA(metric)(s)
+        rhs = lambda l, s: JA(metric, ind=ind)(s)
         if eqax is None:
             for offset in range(s.ndim-2+1):
                 if s.shape[offset:offset+2] == (2,4):
