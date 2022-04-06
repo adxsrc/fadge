@@ -52,9 +52,9 @@ def grrt(aspin, eps, setup, alpha0, beta0, full, atol, inclination):
     print(f"    inclination = {inclination:g}")
 
     ns = GRRT(
-        aspin,
+        aspin, ind='time',
         eps=eps, atol=atol, rtol=0,
-        names={'ind':'lambda'},
+        names={'ind':'t'},
         dtype=np.float64,
         steps=full, dense=False,
     )
