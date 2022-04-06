@@ -37,7 +37,7 @@ def fadge():
 @fadge.command()
 
 @click.option('--eps',         default=1e-3,    help="Stop integration `eps` outside the event horizon")
-@click.option('--atol',        default=1e-3,    help="Absolute error tolerance in numerical integration")
+@click.option('--atol',        default=1e-6,    help="Absolute error tolerance in numerical integration")
 @click.option('--setup',       default='image', help='Initial condition setup; can be "image" or "axis"')
 @click.option('--alpha0',      default=0.0,     help='Initial condition offset along alpha direction')
 @click.option('--beta0',       default=0.0,     help='Initial condition offset along beta  direction')
@@ -53,7 +53,7 @@ def grrt(aspin, eps, setup, alpha0, beta0, full, atol, inclination):
 
     ns = GRRT(
         aspin, ind='time',
-        eps=eps, atol=atol, rtol=0,
+        eps=eps, atol=atol, rtol=0, hmin=0,
         names={'ind':'t'},
         dtype=np.float64,
         steps=full, dense=False,
