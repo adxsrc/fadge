@@ -18,6 +18,3 @@
 
 
 from .hierarchy import *
-
-from .manifold import Manifold, DiscreteManifold
-from .patch    import Patch,    DiscretePatch

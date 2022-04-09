@@ -17,7 +17,7 @@
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from fadge import Manifold, DiscreteManifold
+from fadge import Manifold
 from fadge.manifold import *
 
 
@@ -27,7 +27,7 @@ def test_manifold():
     print(M)
     assert M.ndim == 2
 
-    D = DiscreteManifold(3)
+    D = Manifold(3, discrete=True)
     print(D)
     assert D.ndim == 3
 

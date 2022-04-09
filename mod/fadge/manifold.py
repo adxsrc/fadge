@@ -21,19 +21,6 @@ from .hierarchy import Manifold
 
 
 #==============================================================================
-# Base classes
-
-class DiscreteManifold(Manifold):
-    """DiscreteManifold
-
-    A discrete manifold used in discrete differential geometry.
-
-    """
-    def __repr__(self):
-        return f'{self.ndim}-discretemanifold'
-
-
-#==============================================================================
 # Concrete classes
 
 class Sphere(Manifold):

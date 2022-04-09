@@ -27,6 +27,8 @@ class Polyfold:
     as a base class for Manifolds in `fadge.
 
     """
+    def __init__(self, discrete=False):
+        self.discrete = discrete
 
 
 class Manifold(Polyfold):
@@ -42,7 +44,8 @@ class Manifold(Polyfold):
         An object representing the manifold.
 
     """
-    def __init__(self, ndim=2):
+    def __init__(self, ndim=2, **kwargs):
+        super().__init__(**kwargs)
         self.ndim    = ndim
         self.patches = []
 
@@ -57,7 +60,8 @@ class Patch(Manifold):
     defined.
 
     """
-    def __init__(self, M):
+    def __init__(self, M, **kwargs):
+        super().__init__(**kwargs)
         self.parent = M
         M.patches.append(self)
 
