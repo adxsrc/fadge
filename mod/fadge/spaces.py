@@ -17,24 +17,33 @@
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
 
 
-class Polyfold:
+class Topospace:
+    """Topospace
+
+    Topological spaces are the most general mathematical spaces that
+    allow for the definition of limits, continuity, and connectedness.
+
+    """
+    def __init__(self, discrete=False, spacename=None):
+        self.spacename = spacename
+        self.discrete  = discrete
+
+    def __repr__(self):
+        n = self.spacename if self.spacename else self.__class__.__name__.lower()
+        d = 'discrete'     if self.discrete  else ''
+        return f'{d}{n}'
+
+
+class Polyfold(Topospace):
     """Polyfold
 
     Polyfolds are spaces that may have varying dimensions.  They are
     generalization of the more familiar Manifolds.
 
     Without implementing anything concrete for Polyfold, it is served
-    as a base class for Manifolds in `fadge.
+    as a base class for Manifolds in `fadge`.
 
     """
-    def __init__(self, discrete=False, typename=None):
-        self.discrete = discrete
-        self.typename = typename
-
-    def __repr__(self):
-        d = 'discrete'    if self.discrete else ''
-        n = self.typename if self.typename else self.__class__.__name__.lower()
-        return f'{self.ndim}-{d}{n}'
 
 
 class Manifold(Polyfold):
@@ -55,6 +64,9 @@ class Manifold(Polyfold):
 
         self.ndim    = ndim
         self.patches = []
+
+    def __repr__(self):
+        return f'{self.ndim}-'+super().__repr__()
 
 
 class Patch(Manifold):
