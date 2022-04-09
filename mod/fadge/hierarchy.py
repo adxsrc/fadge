@@ -17,7 +17,13 @@
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from .hierarchy import *
+class Polyfold:
+    """Polyfold
 
-from .manifold import Manifold, DiscreteManifold
-from .patch    import Patch,    DiscretePatch
+    Polyfolds are spaces that may have varying dimensions.  They are
+    generalization of the more familiar Manifolds.
+
+    Without implementing anything concrete for Polyfold, it is served
+    as a base class for Manifolds in `fadge.
+
+    """
