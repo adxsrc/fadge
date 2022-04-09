@@ -30,7 +30,7 @@ def test_patch():
     print(P1)
     assert P1.parent == M
 
-    P2 = Patch(M)
+    P2 = Patch(M, discrete=True)
     print(P2)
     assert P2.parent == M
 
