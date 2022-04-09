@@ -17,23 +17,7 @@
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from .hierarchy import Manifold
-from .manifold  import DiscreteManifold
-
-
-class Patch(Manifold):
-    """Coordinate Patch
-
-    A simply-connected submanifold where coordinate charts can be
-    defined.
-
-    """
-    def __init__(self, M):
-        self.parent = M
-        M.patches.append(self)
-
-    def __repr__(self):
-        return f'{self.parent.ndim}-patch'
+from .hierarchy import Manifold, Patch
 
 
 class DiscretePatch(Patch):
