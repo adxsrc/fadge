@@ -34,8 +34,8 @@ Fast Automatic Differential GEometry (`Fadge`) uses python's dynamic
 nature and [Google JAX](https://github.com/google/jax)'s automatic
 differentiation to create a flexible and high performance differential
 geometry package.
-It supports the more abstract notions of topological space and
-manifold *without* coordinate systems, and allows for creating more
+It supports the more abstract notions of topological spaces and
+manifolds *without* coordinate systems, and allows for creating more
 complex manifolds by surgery.
 Then, it supports definiting multiple coordinate systems, deploying
 different geometric structure, and tensor calculus on these manifolds.
@@ -44,3 +44,15 @@ Target applications include cosmology with non-trivial global
 topology, properties of almost extremely spinning black holes,
 accurate geodesics integration by switching between coordinate
 systems.
+
+
+## Design
+
+`Fadge` supports the notions of topological spaces and manifolds
+*without* coordinate systems.
+It is possible to first create these more "abstract manifolds", and
+then assign geometric structure to them.
+Because of this, the class of a `fadge` space should be updated
+according to what attribute is given.
+Conceptually, this is similar to (`runtime_checkable`) `Protocol` or
+"interface" in the `go` programming language.
