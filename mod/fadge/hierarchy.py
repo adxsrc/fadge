@@ -27,3 +27,24 @@ class Polyfold:
     as a base class for Manifolds in `fadge.
 
     """
+
+
+class Manifold(Polyfold):
+    """Manifold
+
+    A manifold M is a topological space that resembles Euclidean space
+    R^n around each point p in M.  n is called the dimension of M.
+
+    Args:
+        ndim: dimension of the manifold.
+
+    Returns:
+        An object representing the manifold.
+
+    """
+    def __init__(self, ndim=2):
+        self.ndim    = ndim
+        self.patches = []
+
+    def __repr__(self):
+        return f'{self.ndim}-manifold'

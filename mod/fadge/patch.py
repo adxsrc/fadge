@@ -17,7 +17,8 @@
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from .manifold import Manifold, DiscreteManifold
+from .hierarchy import Manifold
+from .manifold  import DiscreteManifold
 
 
 class Patch(Manifold):
