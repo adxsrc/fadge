@@ -9,4 +9,4 @@ performance differential geometry package that use from python's
 dynamic features and [Google JAX](https://github.com/google/jax)'s
 automatic differentiation.
 
-![Kerr-Schild Horizons](horizons.png)
+![Kerr-Schild Horizons](docs/_static/horizons.png)

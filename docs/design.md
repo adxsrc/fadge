@@ -1,10 +1,11 @@
-# Design
+Design
+======
 
 There are multiple difficulties when designing a generic differential
 geometry package in python.
 
-First, while differential geometry are done manifolds, the concept of
-manifolds itself does not require coordinate systems or even
+First, while differential geometry are done on manifolds, the concept
+of manifolds itself does not require coordinate systems or even
 differential structures.
 In order to support the abstract notions of topological spaces and
 manifolds *without* coordinate systems, we need to design `fadge` so
