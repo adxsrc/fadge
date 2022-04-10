@@ -17,6 +17,52 @@
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from abc import ABC, abstractmethod
+from jax.tree_util import register_pytree_node_class
+
+
+class Basespace(ABC):
+    """Basespace
+
+    An abstract base class (ABC) for developing topological space
+    classes that have mathematical counterparts.  As an ABC, it cannot
+    be instantiated---one must first subclasses it to a concrete class
+    such as Topospace below.  In addition, Basespace is intent to be
+    used only within this file.  Subclassing outside this file should
+    always based on concrete classes below.
+
+    """
+    __slots__ = ('data', 'meta')
+
+    @abstractmethod
+    def __init__(self):
+        pass
+
+    def __repr__(self):
+        return self.__class__.__name__
+
+    # Methods that make `Basespace` works as JAX pytree
+    def isleaf(self):
+        return not isinstance(self.data, (tuple, list))
+
+    def __init_subclass__(cls, *args, **kwargs):
+        super().__init_subclass__(*args, **kwargs)
+
+        # All subclasses of `Basespace` will be automatically
+        # registered as JAX pytrees
+        register_pytree_node_class(cls)
+
+    def tree_flatten(self):
+        # Note that tree_flattern() returns (data, meta), which is
+        # different from
+        return (self.data, self.meta)
+
+    @classmethod
+    def tree_unflatten(cls, meta, data):
+        # Note that tree_unflattern accept (meta, data)
+        return cls(*data, **meta)
+
+
 class Topospace:
     """Topospace
 
