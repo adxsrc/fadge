@@ -1,4 +1,5 @@
-# Background
+Background
+==========
 
 Differential geometry is an import field of mathematics that has many
 applications in physics and engineering.
