@@ -63,7 +63,7 @@ class Basespace(ABC):
         return cls(*data, **meta)
 
 
-class Topospace:
+class Topospace(Basespace):
     """Topospace
 
     Topological spaces are the most general mathematical spaces that
@@ -75,8 +75,8 @@ class Topospace:
         self.discrete  = discrete
 
     def __repr__(self):
-        n = self.spacename if self.spacename else self.__class__.__name__.lower()
-        d = 'discrete'     if self.discrete  else ''
+        n = self.spacename if self.spacename else super().__repr__()
+        d = 'Discrete'     if self.discrete  else ''
         return f'{d}{n}'
 
 
