@@ -17,8 +17,14 @@
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from fadge import Manifold
+from fadge import Polyfold, Manifold
 from fadge.manifold import *
+
+
+def test_polyfold():
+
+    P = Polyfold()
+    print(P)
 
 
 def test_manifold():

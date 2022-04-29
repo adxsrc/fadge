@@ -17,16 +17,33 @@
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from .spaces import Manifold
+class Chart(Patch):
+    """Coordinate Chart
+
+    A coordiante chart is a map:
+
+        phi: U -> V
+
+    where U is an open set in a manifold M, V is an open set in R^n
+    and n is the dimension of the manifold.
+
+    Given that
+
+    """
+    def __init__(self, phi, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.phi = phi
+
+    def __call__(self, p):
+        assert p in self
+        return self.phi(p)
 
 
-#==============================================================================
-# Concrete classes
+class Atlas:
+    """Atlas
 
-class Sphere(Manifold):
+    An atlas for ...
 
-    def __repr__(self):
-        return f'S{self.ndim}'
-
-
-class Sphere
+    """
+    def __init__(self, *args, **kwargs):
+        self.charts = args
