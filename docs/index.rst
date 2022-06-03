@@ -18,6 +18,7 @@ automatic differentiation.
    :caption: Contents:
 
    background
+   dg
    design
 
 
