@@ -45,11 +45,13 @@ def fadge():
 
 @click.argument('aspin',       type=float)
 @click.argument('inclination', type=float)
+@click.argument('pa',          type=float)
 
-def grrt(aspin, eps, setup, alpha0, beta0, full, atol, inclination):
+def grrt(aspin, eps, setup, pa, alpha0, beta0, full, atol, inclination):
     print( "Fadge: general relativistic ray tracing")
     print(f"    aspin       = {aspin:.2f}")
     print(f"    inclination = {inclination:g}")
+    print(f" position angle = {pa:g}")
 
     ns = GRRT(
         aspin, ind='time',
@@ -66,8 +68,8 @@ def grrt(aspin, eps, setup, alpha0, beta0, full, atol, inclination):
     elif setup == 'axis':
         if beta0 != 0.0:
             print('WARNING: set_axis() does not support setting `beta0`; ignore')
-        ns.set_axis(16, 1024, alpha0=alpha0)
-        out = f'axis_a{aspin:.2f}_i{inclination:g}.h5'
+        ns.set_axis(16, 1024, PA = pa, alpha0=alpha0)
+        out = f'axis_a{aspin:.2f}_i{inclination:g}_pa{pa:g}.h5'
     else:
         raise ValueError(f'Unknown setup "{setup}".')
 
