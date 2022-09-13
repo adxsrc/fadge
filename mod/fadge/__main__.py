@@ -51,7 +51,7 @@ def grrt(aspin, eps, setup, pa, alpha0, beta0, full, atol, inclination):
     print( "Fadge: general relativistic ray tracing")
     print(f"    aspin       = {aspin:.2f}")
     print(f"    inclination = {inclination:g}")
-    print(f"    inclination = {pa:g}")
+    print(f" position angle = {pa:g}")
 
     ns = GRRT(
         aspin, ind='time',
