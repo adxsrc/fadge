@@ -69,7 +69,7 @@ def grrt(aspin, eps, setup, PA, alpha0, beta0, full, atol, inclination):
         if beta0 != 0.0:
             print('WARNING: set_axis() does not support setting `beta0`; ignore')
         ns.set_axis(16, 1024, PA = PA, alpha0=alpha0)
-        out = f'axis_a{aspin:.2f}_i{inclination:g}.h5'
+        out = f'axis_a{aspin:.2f}_i{inclination:g}_pa{PA:g}.h5'
     else:
         raise ValueError(f'Unknown setup "{setup}".')
 
