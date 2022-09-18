@@ -44,12 +44,13 @@ def Minkowski(ndim=4, **kwargs):
     return metric
 
 
-def KerrSchild(aspin=0.0, ndim=4, **kwargs):
+def KerrSchild(aspin=0.0, qcharge=0.0, ndim=4, **kwargs):
 
     assert ndim == 4
 
     eta = Minkowski(ndim)(None)
-    aa  = aspin * aspin
+    aa  = aspin   * aspin
+    qq  = qcharge * qcharge
 
     @jit
     def metric(x): # closure on `eta`, `aspin`, and `aa`
@@ -57,7 +58,7 @@ def KerrSchild(aspin=0.0, ndim=4, **kwargs):
         kk = 0.5 * (x[1] * x[1] + x[2] * x[2] + zz - aa)
         rr = np.sqrt(kk * kk + aa * zz) + kk
         r  = np.sqrt(rr)
-        f  = (2.0 * rr * r) / (rr * rr + aa * zz)
+        f  = rr * (2.0 * r - qq) / (rr * rr + aa * zz)
         l  = np.array([
             1.0,
             (r * x[1] + aspin * x[2]) / (rr + aa),
