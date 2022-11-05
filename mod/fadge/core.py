@@ -51,6 +51,18 @@ class GRRT:
         else:
             print('There is no event horizon')
 
+        def KSr(x): # closure on aa
+            zz = x[3] * x[3]
+            kk = 0.5 * (x[1] * x[1] + x[2] * x[2] + zz - aa)
+            rr = np.sqrt(kk * kk + aa * zz) + kk
+            return np.sqrt(rr)
+        self.KSr = KSr
+
+        def KSd(x): # closure on aspin
+            dR = np.sqrt(x[1] * x[1] + x[2] * x[2]) - abs(aspin)
+            return np.sqrt(dR * dR + x[3] * x[3])
+        self.KSd = KSd
+
     def set_cam(self, r_obs=1e4, i_obs=60, j_obs=0):
         self.rij    = np.array([r_obs, np.radians(i_obs), np.radians(j_obs)], dtype=self.dtype)
         self.kwargs = {'L':-2*r_obs, 'h':0.75*r_obs, **self.kwargs}
@@ -95,21 +107,9 @@ class GRRT:
             if L is not None:
                 kwargs.pop('L')
 
-            aa = self.aspin * self.aspin
-            def KSr(x): # closure on aa
-                zz = x[3] * x[3]
-                kk = 0.5 * (x[1] * x[1] + x[2] * x[2] + zz - aa)
-                rr = np.sqrt(kk * kk + aa * zz) + kk
-                return np.sqrt(rr)
-
-            absaspin = abs(self.aspin)
-            def KSd(x): # closure on absaspin
-                dR = np.sqrt(x[1] * x[1] + x[2] * x[2]) - absaspin
-                return np.sqrt(dR * dR + x[3] * x[3])
-
             fhupper = kwargs.pop('fhupper', 0.75)
             if 'hupper' not in kwargs:
-                kwargs['hupper'] = lambda l, s: KSr(s[0]) * fhupper + 1
+                kwargs['hupper'] = lambda l, s: self.KSr(s[0]) * fhupper + 1
 
             fhlower = kwargs.pop('fhlower', None)
             if 'hlower' not in kwargs and fhlower is not None:
@@ -118,9 +118,9 @@ class GRRT:
             eps = kwargs.pop('eps', 1e-2)
             if 'filter' not in kwargs:
                 if np.isnan(self.reh):
-                    kwargs['filter'] = lambda l, s: KSd(s[0]) >= eps
+                    kwargs['filter'] = lambda l, s: self.KSd(s[0]) >= eps
                 else:
-                    kwargs['filter'] = lambda l, s: KSr(s[0]) >= self.reh + eps
+                    kwargs['filter'] = lambda l, s: self.KSr(s[0]) >= self.reh + eps
 
             self._geode = Geode(self.metric, 0, self._ic, **kwargs)
             self._ic    = None
