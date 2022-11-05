@@ -101,6 +101,14 @@ class GRRT:
         self._ic    = np.array([s[0], self.nullify(s[0],s[1])])
         self.kwargs = {'L':100, 'h':1, **self.kwargs}
 
+    def set_particle(self, x, v):
+        self._ic    = np.array([x, self.normalize(x, v)])
+        self.kwargs = {'L':100, 'h':1, **self.kwargs}
+
+    def set_photon(self, x, v):
+        self._ic    = np.array([x, self.nullify(x, v)])
+        self.kwargs = {'L':100, 'h':1, **self.kwargs}
+
     def geode(self, L=None, N=None, **kwargs):
 
         if self._ic is not None:
