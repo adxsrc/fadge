@@ -65,10 +65,14 @@ class GRRT:
         self.KSd = KSd
 
     def set_particle(self, x, v):
+        x = np.asarray(x)
+        v = np.asarray(v)
         self._ic    = np.array([x, self.normalize(x, v)])
         self.kwargs = {'L':100, 'h':1, **self.kwargs}
 
     def set_photon(self, x, v):
+        x = np.asarray(x)
+        v = np.asarray(v)
         self._ic    = np.array([x, self.nullify(x, v)])
         self.kwargs = {'L':100, 'h':1, **self.kwargs}
 
