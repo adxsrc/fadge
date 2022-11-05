@@ -64,6 +64,19 @@ class GRRT:
             return np.sqrt(dR * dR + x[3] * x[3])
         self.KSd = KSd
 
+    def set_particle(self, x, v):
+        self._ic    = np.array([x, self.normalize(x, v)])
+        self.kwargs = {'L':100, 'h':1, **self.kwargs}
+
+    def set_photon(self, x, v):
+        self._ic    = np.array([x, self.nullify(x, v)])
+        self.kwargs = {'L':100, 'h':1, **self.kwargs}
+
+    def set_sphorbit(self, r=3):
+        s = sphorbit(self.aspin, r)
+        self._ic    = np.array([s[0], self.nullify(s[0],s[1])])
+        self.kwargs = {'L':100, 'h':1, **self.kwargs}
+
     def set_cam(self, r_obs=1e4, i_obs=60, j_obs=0):
         self.rij    = np.array([r_obs, np.radians(i_obs), np.radians(j_obs)], dtype=self.dtype)
         self.kwargs = {'L':-2*r_obs, 'h':0.75*r_obs, **self.kwargs}
@@ -95,19 +108,6 @@ class GRRT:
         a   = r * np.cos(phi)
         b   = r * np.sin(phi)
         self.set_pixels(a, b)
-
-    def set_sphorbit(self, r=3):
-        s = sphorbit(self.aspin, r)
-        self._ic    = np.array([s[0], self.nullify(s[0],s[1])])
-        self.kwargs = {'L':100, 'h':1, **self.kwargs}
-
-    def set_particle(self, x, v):
-        self._ic    = np.array([x, self.normalize(x, v)])
-        self.kwargs = {'L':100, 'h':1, **self.kwargs}
-
-    def set_photon(self, x, v):
-        self._ic    = np.array([x, self.nullify(x, v)])
-        self.kwargs = {'L':100, 'h':1, **self.kwargs}
 
     def geode(self, L=None, N=None, **kwargs):
 
