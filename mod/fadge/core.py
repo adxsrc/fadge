@@ -22,7 +22,7 @@ from jax.experimental.maps import xmap
 
 from .metric import KerrSchild
 from .geode  import Geode
-from .utils  import Nullify
+from .utils  import Nullify, Normalize
 from .icond  import cam, sphorbit
 
 
@@ -33,12 +33,13 @@ class GRRT:
         self.dtype   = dtype
         self.kwargs  = kwargs
 
-        self.metric  = KerrSchild(aspin)
-        self.nullify = Nullify(self.metric)
+        self.metric    = KerrSchild(aspin)
+        self.nullify   = Nullify(self.metric)
+        self.normalize = Normalize(self.metric)
 
-        self.reh     = np.nan
-        self._geode  = None
-        self._ic     = None
+        self.reh    = np.nan
+        self._geode = None
+        self._ic    = None
 
         aa = self.aspin * self.aspin
         if aa <= 1:

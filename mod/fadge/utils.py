@@ -49,3 +49,15 @@ def Nullify(metric, p=1):
         return np.concatenate([v[:p], v[p:] / S])
 
     return nullify
+
+
+def Normalize(metric, p=1):
+
+    assert p > 0
+
+    def normalize(x, v): # closure on `p`
+        g  = metric(x)
+        vv = v @ g @ v
+        return v / np.sqrt(abs(vv))
+
+    return normalize
