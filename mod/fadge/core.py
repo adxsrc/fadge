@@ -28,12 +28,13 @@ from .icond  import cam, sphorbit
 
 class GRRT:
 
-    def __init__(self, aspin=0, hp=False, dtype=np.float32, **kwargs):
+    def __init__(self, aspin=0, qcharge=0, hp=False, dtype=np.float32, **kwargs):
         self.aspin   = aspin
+        self.qcharge = qcharge
         self.dtype   = dtype
         self.kwargs  = kwargs
 
-        self.metric    = KerrSchild(aspin)
+        self.metric    = KerrSchild(aspin, qcharge)
         self.nullify   = Nullify(self.metric)
         self.normalize = Normalize(self.metric)
 
@@ -41,9 +42,10 @@ class GRRT:
         self._geode = None
         self._ic    = None
 
-        aa = self.aspin * self.aspin
+        aa = self.aspin   * self.aspin
+        qq = self.qcharge * self.qcharge
         if aa <= 1:
-            reh = 1.0 + np.sqrt(1 - aa)
+            reh = 1.0 + np.sqrt(1 - aa - qq)
             print('Radius of outer event horizon:', reh)
             if hp:
                 print('Horizon penetrating')
