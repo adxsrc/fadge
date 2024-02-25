@@ -17,10 +17,11 @@
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from importlib import import_module
+
 from jax import numpy as np
 from jax.experimental.maps import xmap
 
-from .metric.Kerr import KerrSchild
 from .geode import Geode
 from .utils import Nullify, Normalize
 from .icond import cam, sphorbit
@@ -28,13 +29,16 @@ from .icond import cam, sphorbit
 
 class GRRT:
 
-    def __init__(self, aspin=0, qcharge=0, hp=False, dtype=np.float32, **kwargs):
+    def __init__(self, manifold='Kerr', coordinate='KerrSchild', aspin=0, qcharge=0, hp=False, dtype=np.float32, **kwargs):
+
+        Metric = getattr(import_module('.'+manifold, 'fadge.metric'), coordinate)
+
         self.aspin   = aspin
         self.qcharge = qcharge
         self.dtype   = dtype
         self.kwargs  = kwargs
 
-        self.metric    = KerrSchild(aspin, qcharge)
+        self.metric    = Metric(aspin, qcharge)
         self.nullify   = Nullify(self.metric)
         self.normalize = Normalize(self.metric)
 
