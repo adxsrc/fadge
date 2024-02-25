@@ -1,5 +1,5 @@
-[![Lint and test fadge](https://github.com/adxsrc/fadge/actions/workflows/python-test.yml/badge.svg)](https://github.com/adxsrc/fadge/actions/workflows/python-test.yml)
-[![Publish fadge to PyPI](https://github.com/adxsrc/fadge/actions/workflows/python-publish.yml/badge.svg)](https://github.com/adxsrc/fadge/actions/workflows/python-publish.yml)
+[![Lint & test](https://github.com/adxsrc/fadge/actions/workflows/python-package.yml/badge.svg)](https://github.com/adxsrc/fadge/actions/workflows/python-package.yml)
+[![PyPI](https://github.com/adxsrc/fadge/actions/workflows/python-publish.yml/badge.svg)](https://pypi.org/project/fadge/)
 
 # `Fadge`
 
