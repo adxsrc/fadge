@@ -43,9 +43,9 @@ def fadge():
 @click.option('--beta0',       default=0.0,     help='Initial condition offset along beta  direction')
 @click.option('--full/--ends', default=False,   help="Output full geodesics or only end points")
 
-@click.argument('aspin',       type=float)
-@click.argument('inclination', type=float)
-@click.argument('pa',          type=float)
+@click.argument('aspin',           type=float)
+@click.argument('inclination',     type=float)
+@click.argument('pa', default='0', type=float)
 
 def grrt(aspin, eps, setup, pa, alpha0, beta0, full, atol, inclination):
     print( "Fadge: general relativistic ray tracing")
@@ -54,7 +54,7 @@ def grrt(aspin, eps, setup, pa, alpha0, beta0, full, atol, inclination):
     print(f" position angle = {pa:g}")
 
     ns = GRRT(
-        aspin, ind='time',
+        aspin=aspin, ind='time',
         eps=eps, atol=atol, rtol=0, hmin=0,
         names={'ind':'t'},
         dtype=np.float64,
