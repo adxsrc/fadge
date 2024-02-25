@@ -36,10 +36,10 @@ setup(
             'fadge = fadge.__main__:fadge',
         ],
     },
-    python_requires='>=3.7',
+    python_requires='>=3.7,<3.12',
     install_requires=[
+        'xaj>=0.1.8,<0.2',
         'click>=7.1.2',
-        'h5py',
-        'xaj>=0.1.6,<0.2',
+        'h5py>=3',
     ],
 )
