@@ -24,9 +24,9 @@ def Cartesian(ndim=3, **kwargs):
 
     assert ndim > 0
 
-    g = np.identity(ndim, **kwargs) # render constant metric
+    delta = np.identity(ndim, **kwargs) # render constant metric
 
-    def metric(x): # closure on `g`
-        return g
+    def metric(x): # closure on `delta`
+        return delta
 
     return metric

@@ -24,9 +24,9 @@ def Minkowski(ndim=4, **kwargs):
 
     assert ndim > 1
 
-    g = np.diag(np.array([-1.0] + [1.0] * (ndim-1), **kwargs)) # render constant metric
+    eta = np.diag(np.array([-1.0] + [1.0] * (ndim-1), **kwargs)) # render constant metric
 
-    def metric(x): # closure on `g`
-        return g
+    def metric(x): # closure on `eta`
+        return eta
 
     return metric

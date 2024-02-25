@@ -24,12 +24,12 @@ def KerrSchild(aspin=0.0, qcharge=0.0, ndim=4, **kwargs):
 
     assert ndim == 4
 
-    eta = Minkowski(ndim)(None)
+    eta = np.diag(np.array([-1.0] + [1.0] * (ndim-1), **kwargs))
     aa  = aspin   * aspin
     qq  = qcharge * qcharge
 
     @jit
-    def metric(x): # closure on `eta`, `aspin`, and `aa`
+    def metric(x): # closure on `eta`, `aspin`, `aa`, and `qq`
         zz = x[3] * x[3]
         kk = 0.5 * (x[1] * x[1] + x[2] * x[2] + zz - aa)
         rr = np.sqrt(kk * kk + aa * zz) + kk
