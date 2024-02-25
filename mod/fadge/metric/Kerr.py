@@ -20,30 +20,6 @@
 from jax import numpy as np, jit
 
 
-def Cartesian(ndim=3, **kwargs):
-
-    assert ndim > 0
-
-    g = np.identity(ndim, **kwargs) # render constant metric
-
-    def metric(x): # closure on `g`
-        return g
-
-    return metric
-
-
-def Minkowski(ndim=4, **kwargs):
-
-    assert ndim > 1
-
-    g = np.diag(np.array([-1.0] + [1.0] * (ndim-1), **kwargs)) # render constant metric
-
-    def metric(x): # closure on `g`
-        return g
-
-    return metric
-
-
 def KerrSchild(aspin=0.0, qcharge=0.0, ndim=4, **kwargs):
 
     assert ndim == 4
