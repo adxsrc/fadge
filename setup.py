@@ -29,6 +29,8 @@ setup(
     author='Chi-kwan Chan',
     author_email='chanc@arizona.edu',
     description='Fast Automatic Differential GEometry',
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     packages=find_packages('mod'),
     package_dir={'': 'mod'},
     entry_points={
