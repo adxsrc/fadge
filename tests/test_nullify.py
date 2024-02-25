@@ -17,8 +17,9 @@
 # along with fadge.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from fadge.metric import Minkowski, KerrSchild
-from fadge.utils  import Nullify
+from fadge.metric.Minkowski import Minkowski
+from fadge.metric.Kerr      import KerrSchild
+from fadge.utils            import Nullify
 
 from jax import numpy as np
 
