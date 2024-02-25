@@ -20,10 +20,10 @@
 from jax import numpy as np
 from jax.experimental.maps import xmap
 
-from .metric import KerrSchild
-from .geode  import Geode
-from .utils  import Nullify, Normalize
-from .icond  import cam, sphorbit
+from .metric.Kerr import KerrSchild
+from .geode import Geode
+from .utils import Nullify, Normalize
+from .icond import cam, sphorbit
 
 
 class GRRT:
