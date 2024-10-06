@@ -70,6 +70,9 @@ class GRRT:
             return np.sqrt(dR * dR + x[3] * x[3])
         self.KSd = KSd
 
+    #======================================================================
+    # Set single particle or photon given their initial conditions
+
     def set_particle(self, x, v):
         x = np.asarray(x)
         v = np.asarray(v)
@@ -82,10 +85,16 @@ class GRRT:
         self._ic    = np.array([x, self.nullify(x, v)])
         self.kwargs = {'L':100, 'h':1, **self.kwargs}
 
+    #----------------------------------------------------------------------
+    # Set single photon in a (unstable) spherical orbit given its radius
+
     def set_sphorbit(self, r=3):
         s = sphorbit(self.aspin, r)
         self._ic    = np.array([s[0], self.nullify(s[0],s[1])])
         self.kwargs = {'L':100, 'h':1, **self.kwargs}
+
+    #----------------------------------------------------------------------
+    # Set multiple photon from an image plane set up by set_cam()
 
     def set_cam(self, r_obs=1e4, i_obs=60, j_obs=0):
         self.rij    = np.array([r_obs, np.radians(i_obs), np.radians(j_obs)], dtype=self.dtype)
@@ -119,6 +128,7 @@ class GRRT:
         b   = r * np.sin(phi)
         self.set_pixels(a, b)
 
+    #======================================================================
     def geode(self, L=None, N=None, **kwargs):
 
         if self._ic is not None:
