@@ -41,6 +41,7 @@ setup(
     python_requires='>=3.7,<3.12',
     install_requires=[
         'xaj>=0.1.8,<0.2',
+        'numpy<2',
         'click>=7.1.2',
         'h5py>=3',
     ],
