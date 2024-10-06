@@ -38,16 +38,19 @@ def cam(rij, ab):
     ], dtype=ab.dtype)
 
 
-def sphorbit(aspin, r0):
+def shell(aspin, r0, PHI0=None, Q0=None):
 
-    def thetadot(a, r):
-        return np.sqrt(Q(a, r))
+    if PHI0 is None:
+        PHI0 = PHI(aspin, r0)
 
-    def phidot(a, r):
-        return (2*r*a + r*(r-2) * PHI(a, r)) / (r*r + a*a - 2*r)
+    if Q0 is None:
+        Q0 = Q(aspin, r0)
 
-    R = np.sqrt(r0*r0 + aspin*aspin)
+    RR       = r0*r0 + aspin*aspin
+    R        = np.sqrt(RR)
+    thetadot = np.sqrt(Q0)
+    phidot   = (2*r0*aspin + r0*(r0-2) * PHI0) / (RR - 2*r0)
     return np.array([
         [0, R, 0, 0],
-        [1, 0, R * phidot(aspin, r0), -r0 * thetadot(aspin, r0)],
+        [1, 0, R * phidot, -r0 * thetadot],
     ])

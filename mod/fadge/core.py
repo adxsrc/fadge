@@ -24,7 +24,7 @@ from jax.experimental.maps import xmap
 
 from .geode import Geode
 from .utils import Nullify, Normalize
-from .icond import cam, sphorbit
+from .icond import cam, shell
 
 
 class GRRT:
@@ -89,7 +89,7 @@ class GRRT:
     # Set single photon in a (unstable) spherical orbit given its radius
 
     def set_sphorbit(self, r=3):
-        s = sphorbit(self.aspin, r)
+        s = shell(self.aspin, r)
         self._ic    = np.array([s[0], self.nullify(s[0],s[1])])
         self.kwargs = {'L':100, 'h':1, **self.kwargs}
 
