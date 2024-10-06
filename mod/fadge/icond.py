@@ -38,18 +38,17 @@ def cam(rij, ab):
     ], dtype=ab.dtype)
 
 
-def shell(aspin, r0, PHI0=None, Q0=None):
+def shell(aspin, r0, dPHI, dQ):
 
-    if PHI0 is None:
-        PHI0 = PHI(aspin, r0)
-
-    if Q0 is None:
-        Q0 = Q(aspin, r0)
+    PHI0     = PHI(aspin, r0) + dPHI
+    Q0       = Q(aspin, r0)   + dQ
 
     RR       = r0*r0 + aspin*aspin
     R        = np.sqrt(RR)
+
     thetadot = np.sqrt(Q0)
     phidot   = (2*r0*aspin + r0*(r0-2) * PHI0) / (RR - 2*r0)
+
     return np.array([
         [0, R, 0, 0],
         [1, 0, R * phidot, -r0 * thetadot],

@@ -88,9 +88,17 @@ class GRRT:
     #----------------------------------------------------------------------
     # Set single photon in a (unstable) spherical orbit given its radius
 
-    def set_sphorbit(self, r=3):
-        s = shell(self.aspin, r)
-        self._ic    = np.array([s[0], self.nullify(s[0],s[1])])
+    def set_shell(self, r=3, dPHI=0, dQ=0):
+        def ic(rPQ):
+            r, dPHI, dQ = rPQ
+            s = shell(self.aspin, r, dPHI, dQ)
+            return np.array([s[0], self.nullify(s[0],s[1])])
+        rPQ = np.array([r, dPHI, dQ], dtype=self.dtype)
+        self._ic = xmap(
+            ic,
+            in_axes ={i  :i for i in range(1,rPQ.ndim)},
+            out_axes={i+1:i for i in range(1,rPQ.ndim)},
+        )(rPQ)
         self.kwargs = {'L':100, 'h':1, **self.kwargs}
 
     #----------------------------------------------------------------------
