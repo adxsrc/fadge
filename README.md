@@ -4,9 +4,9 @@
 > [!WARNING]
 >
 >   This version of `fadge` works only with `jax` and `jaxlib` 0.3.
->   But `jaxlib` 0.3 is not available on PyPI.
->   To install this version of `fadge`, please first install `jaxlib`
->   with:
+>   However, `jaxlib` 0.3 is no longer available on PyPI.
+>   To install this version of `fadge`, please use python 3.7 to 3.11
+>   and first install `jaxlib` with:
 >
 >       pip install jaxlib==0.3.25 -f https://storage.googleapis.com/jax-releases/jax_releases.html
 
